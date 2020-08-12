@@ -48,6 +48,7 @@ class SegmentationModel():
     def getPrediction(self, predictor, image):
         # run model
         outputs = predictor(image)
+        print("prediction completed")
         return outputs
 
     def getLabels_PanopticSeg(self, modelPrediction):
@@ -67,10 +68,10 @@ class SegmentationModel():
                 labels_things.append(self.thing_classes[classID[i][0]])
             else:
                 labels_stuff.append(self.stuff_classes[classID[i][0]])
+        print("prediction rendered-PanopticSeg")
         return (labels_things, labels_stuff)
 
     def getMasks_InstanceSeg(self, modelPrediction, labels=False):
-        pass
         # convert instance predictions to numpy arrays
         maskClassIDs = modelPrediction["instances"].pred_classes.numpy()
         masks =modelPrediction["instances"].pred_masks.numpy()
@@ -80,6 +81,7 @@ class SegmentationModel():
             for i in range(len(maskClassIDs)):
                 # print(thing_classes[maskClassID[i]])
                 maskLabels.append(self.thing_classes[maskClassIDs[i]])
+            print("prediction rendered-InstanceSeg")
             return (masks, maskLabels)
         return masks
 
