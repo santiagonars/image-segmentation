@@ -68,7 +68,7 @@ class SegmentationModel():
                 labels_things.append(self.thing_classes[classID[i][0]])
             else:
                 labels_stuff.append(self.stuff_classes[classID[i][0]])
-        print("prediction rendered-PanopticSeg")
+        print("rendered PanopticSeg")
         return (labels_things, labels_stuff)
 
     def getMasks_InstanceSeg(self, modelPrediction, labels=False):
@@ -81,7 +81,7 @@ class SegmentationModel():
             for i in range(len(maskClassIDs)):
                 # print(thing_classes[maskClassID[i]])
                 maskLabels.append(self.thing_classes[maskClassIDs[i]])
-            print("prediction rendered-InstanceSeg")
+            print("rendered InstanceSeg")
             return (masks, maskLabels)
         return masks
 
@@ -100,7 +100,7 @@ class ImagePreProcessing():
             image_response = requests.get(imageUrl ,timeout=15)
             # raise_for_status will throw an exception if an HTTP error
             image_response.raise_for_status
-            print(image_response)
+            print('image received: {}'.format(image_response))
             # get image as numpy array
             image_NumpyArray = np.frombuffer(image_response.content, np.uint8)
             image = cv2.imdecode(image_NumpyArray, cv2.IMREAD_COLOR)
